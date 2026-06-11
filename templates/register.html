@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}회원가입 · 핑크미야{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-6 pt-14 pb-20">
+  <div class="bg-white border border-pink-100 rounded-3xl p-8 shadow-xl">
+    <div class="text-center mb-8">
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-300 to-rose-300 flex items-center justify-center mb-4">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="15" r="8" fill="white"/>
+          <path d="M7 8 L10 3 L13 9" fill="#f9a8d4"/>
+          <path d="M21 8 L18 3 L15 9" fill="#f9a8d4"/>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight">핑크미야에 오신 것을 환영해요</h1>
+      <p class="text-pink-500 mt-1 text-sm">3초 만에 가입하고 귀여운 상품들을 만나보세요</p>
+    </div>
+
+    <form method="post" action="{{ url_for('register') }}">
+      <div class="space-y-5">
+        <div>
+          <label class="text-xs font-medium text-pink-500 block mb-1.5">이름 (닉네임)</label>
+          <input type="text" name="name" value="모모집사" required
+                 class="w-full border border-pink-200 focus:border-pink-300 px-4 py-3.5 rounded-2xl text-sm outline-none">
+        </div>
+        <div>
+          <label class="text-xs font-medium text-pink-500 block mb-1.5">이메일</label>
+          <input type="email" name="email" value="newcat@meow.com" required
+                 class="w-full border border-pink-200 focus:border-pink-300 px-4 py-3.5 rounded-2xl text-sm outline-none">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-xs font-medium text-pink-500 block mb-1.5">비밀번호</label>
+            <input type="password" name="password" value="123456" required
+                   class="w-full border border-pink-200 focus:border-pink-300 px-4 py-3.5 rounded-2xl text-sm outline-none">
+          </div>
+          <div>
+            <label class="text-xs font-medium text-pink-500 block mb-1.5">비밀번호 확인</label>
+            <input type="password" name="password2" value="123456" required
+                   class="w-full border border-pink-200 focus:border-pink-300 px-4 py-3.5 rounded-2xl text-sm outline-none">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="mt-7 w-full pink-btn py-4 text-white font-semibold rounded-3xl text-base">
+        회원가입하고 시작하기
+      </button>
+    </form>
+
+    <div class="text-center mt-6 text-sm">
+      <span class="text-pink-400">이미 계정이 있으신가요?</span>
+      <a href="{{ url_for('login') }}" class="ml-1 font-semibold text-pink-500 hover:underline">로그인</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

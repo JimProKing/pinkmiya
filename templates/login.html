@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}로그인 · 핑크미야{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto px-6 pt-14 pb-20">
+  <div class="bg-white border border-pink-100 rounded-3xl p-8 shadow-xl">
+    <div class="text-center mb-8">
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-300 to-rose-300 flex items-center justify-center mb-4">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="15" r="8" fill="white"/>
+          <path d="M7 8 L10 3 L13 9" fill="#f9a8d4"/>
+          <path d="M21 8 L18 3 L15 9" fill="#f9a8d4"/>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight">다시 만나서 반가워요 🐾</h1>
+      <p class="text-pink-500 mt-1 text-sm">핑크미야에 로그인하고 쇼핑을 계속하세요</p>
+    </div>
+
+    <form method="post" action="{{ url_for('login') }}">
+      {% if request.args.get('next') %}
+        <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+      {% endif %}
+
+      <div class="space-y-5">
+        <div>
+          <label class="text-xs font-medium text-pink-500 block mb-1.5">이메일</label>
+          <input type="email" name="email" value="momo@catmail.com" required
+                 class="w-full border border-pink-200 focus:border-pink-300 px-4 py-3.5 rounded-2xl text-sm outline-none">
+        </div>
+        <div>
+          <label class="text-xs font-medium text-pink-500 block mb-1.5">비밀번호</label>
+          <input type="password" name="password" value="123456" required
+                 class="w-full border border-pink-200 focus:border-pink-300 px-4 py-3.5 rounded-2xl text-sm outline-none">
+        </div>
+      </div>
+
+      <button type="submit" class="mt-7 w-full pink-btn py-4 text-white font-semibold rounded-3xl text-base">
+        로그인
+      </button>
+    </form>
+
+    <div class="text-center mt-7 text-sm">
+      <span class="text-pink-400">계정이 없으신가요?</span>
+      <a href="{{ url_for('register') }}" class="ml-1 font-semibold text-pink-500 hover:underline">회원가입</a>
+    </div>
+
+    <div class="mt-6 text-[11px] text-center text-pink-300">테스트 계정: 아무 이메일 + 4자 이상 비밀번호</div>
+  </div>
+</div>
+{% endblock %}

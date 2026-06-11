@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}결제하기 · 핑크미야{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 pt-10 pb-16">
+  <h1 class="text-3xl font-bold tracking-tight mb-6">주문서 작성</h1>
+
+  <div class="grid md:grid-cols-5 gap-7">
+    <!-- Form -->
+    <div class="md:col-span-3">
+      <form method="post" action="{{ url_for('checkout') }}" class="bg-white border border-pink-100 rounded-3xl p-7 space-y-5">
+        <div>
+          <label class="text-xs font-medium text-pink-500">받는 분</label>
+          <input type="text" name="name" value="{{ user.name }}" required
+                 class="w-full mt-1.5 border border-pink-200 px-4 py-3 rounded-2xl text-sm">
+        </div>
+        <div>
+          <label class="text-xs font-medium text-pink-500">연락처</label>
+          <input type="tel" name="phone" value="010-1234-5678" required
+                 class="w-full mt-1.5 border border-pink-200 px-4 py-3 rounded-2xl text-sm">
+        </div>
+        <div>
+          <label class="text-xs font-medium text-pink-500">배송지 주소</label>
+          <input type="text" name="address" value="서울특별시 강남구 선릉로 123, 7층" required
+                 class="w-full mt-1.5 border border-pink-200 px-4 py-3 rounded-2xl text-sm">
+        </div>
+        <div>
+          <label class="text-xs font-medium text-pink-500">배송 요청사항</label>
+          <input type="text" name="memo" value="문 앞에 놓아주세요" 
+                 class="w-full mt-1.5 border border-pink-200 px-4 py-3 rounded-2xl text-sm">
+        </div>
+
+        <button type="submit" class="w-full mt-4 pink-btn py-4 text-white rounded-3xl font-semibold text-lg">
+          결제 완료하기
+        </button>
+        <p class="text-center text-xs text-pink-400">안전한 결제 · 카카오페이 / 카드 / 계좌이체 지원</p>
+      </form>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="md:col-span-2">
+      <div class="bg-pink-50 border border-pink-100 rounded-3xl p-6 sticky top-24">
+        <div class="font-semibold mb-4">주문 요약</div>
+        
+        <div class="space-y-3 text-sm">
+          {% for item in cart_items %}
+            <div class="flex justify-between">
+              <div class="pr-2">{{ item.name }} <span class="text-pink-400">×{{ item.qty }}</span></div>
+              <div class="font-medium">{{ "{:,}".format(item.subtotal) }}원</div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="h-px bg-pink-200 my-4"></div>
+
+        <div class="flex justify-between text-sm">
+          <span class="text-pink-500">상품 금액</span>
+          <span class="font-medium">{{ "{:,}".format(total) }}원</span>
+        </div>
+        <div class="flex justify-between text-sm mt-1">
+          <span class="text-pink-500">배송비</span>
+          <span class="font-medium text-emerald-500">무료</span>
+        </div>
+
+        <div class="flex justify-between font-semibold text-xl mt-4">
+          <span>총 결제금액</span>
+          <span class="price-text">{{ "{:,}".format(total) }}원</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

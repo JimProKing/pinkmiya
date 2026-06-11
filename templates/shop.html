@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}전체 상품 · 핑크미야{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-6 pt-10 pb-16">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-3 mb-8">
+    <div>
+      <h1 class="text-4xl font-bold tracking-tighter text-[#831843]">전체 상품</h1>
+      <p class="text-pink-600 mt-1">사랑스러운 고양이를 위한 화이트 &amp; 핀크 컬렉션</p>
+    </div>
+
+    <!-- Search (mobile friendly) -->
+    <form action="{{ url_for('shop') }}" method="get" class="md:hidden">
+      <div class="relative">
+        <input type="text" name="q" value="{{ search_query }}" placeholder="상품 검색..." 
+               class="w-full bg-white border border-pink-200 pl-10 py-3 rounded-3xl text-sm outline-none">
+        <i class="fa-solid fa-search absolute left-4 top-3.5 text-pink-300"></i>
+      </div>
+    </form>
+  </div>
+
+  <!-- Category Filter Links (strong linking) -->
+  <div class="flex flex-wrap gap-2 mb-8">
+    {% for cat in categories %}
+      <a href="{{ url_for('shop', category=cat, q=search_query) }}" 
+         class="category-chip px-5 py-1.5 rounded-3xl border text-sm font-medium 
+                {% if cat == current_category %}active border-transparent bg-pink-100 text-[#831843]{% else %}border-pink-100 hover:border-pink-200 bg-white text-pink-600{% endif %}">
+        {{ cat }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <!-- Results info -->
+  <div class="mb-5 text-sm text-pink-500 flex items-center justify-between">
+    <div>
+      총 <span class="font-semibold text-pink-600">{{ products|length }}</span>개 상품
+      {% if current_category != '전체' %} · <span class="font-medium text-[#831843]">{{ current_category }}</span>{% endif %}
+      {% if search_query %} · "<span class="font-medium">{{ search_query }}</span>" 검색 결과{% endif %}
+    </div>
+    <a href="{{ url_for('shop') }}" class="text-xs underline hover:no-underline">필터 초기화</a>
+  </div>
+
+  <!-- Product Grid -->
+  {% if products %}
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+      {% for product in products %}
+        <div class="product-card group bg-white rounded-3xl overflow-hidden border border-pink-100">
+          <a href="{{ url_for('product_detail', product_id=product.id) }}" class="block">
+            <div class="h-44 bg-gradient-to-br from-pink-50 to-white relative flex items-center justify-center overflow-hidden">
+              <div class="text-[78px] select-none transition-transform group-hover:scale-110">{{ product.emoji }}</div>
+              {% if product.badge %}
+                <div class="absolute top-3 left-3 px-2.5 py-px text-[10px] font-semibold rounded-full bg-white/95 text-pink-500 border border-pink-100 shadow-sm">
+                  {{ product.badge }}
+                </div>
+              {% endif %}
+              <div class="absolute top-3 right-3 bg-white/90 text-pink-400 text-[10px] px-1.5 py-px rounded font-medium border border-pink-100">
+                {{ product.category }}
+              </div>
+            </div>
+          </a>
+
+          <div class="p-4">
+            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="block">
+              <div class="font-semibold text-[15px] leading-snug tracking-tight group-hover:text-pink-500 transition-colors">
+                {{ product.name }}
+              </div>
+            </a>
+
+            <div class="mt-auto pt-4 flex items-end justify-between">
+              <div>
+                <span class="text-2xl font-bold text-[#831843] price-text">{{ "{:,}".format(product.price) }}</span>
+                <span class="text-pink-400 text-xs ml-px">원</span>
+              </div>
+
+              <div class="flex gap-2 items-center">
+                <!-- Wishlist heart -->
+                <form action="{{ url_for('toggle_wishlist') }}" method="post" class="inline" onclick="event.stopImmediatePropagation();">
+                  <input type="hidden" name="product_id" value="{{ product.id }}">
+                  <button type="submit" class="text-pink-300 hover:text-pink-500 px-1 text-lg leading-none" title="위시리스트">
+                    {% if product.id in wishlist %}❤️{% else %}♡{% endif %}
+                  </button>
+                </form>
+
+                <!-- Direct link to detail -->
+                <a href="{{ url_for('product_detail', product_id=product.id) }}" 
+                   class="text-xs px-3 py-2 rounded-2xl border border-pink-100 text-pink-400 hover:bg-pink-50">
+                  보기
+                </a>
+                <!-- Add to cart form -->
+                <form action="{{ url_for('add_to_cart') }}" method="post" class="inline">
+                  <input type="hidden" name="product_id" value="{{ product.id }}">
+                  <input type="hidden" name="qty" value="1">
+                  <input type="hidden" name="next" value="{{ url_for('shop', category=current_category, q=search_query) }}">
+                  <button type="submit" 
+                          class="text-xs px-4 py-2 rounded-2xl border border-pink-200 text-pink-500 hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all">
+                    담기
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="py-16 text-center">
+      <i class="fa-solid fa-search text-5xl text-pink-200 mb-4"></i>
+      <div class="text-xl text-pink-400">검색 결과가 없어요</div>
+      <a href="{{ url_for('shop') }}" class="mt-4 inline-block text-pink-500 underline">전체 상품 보기</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
