@@ -2,6 +2,10 @@
 
 > 흰색과 분홍색으로 물든, 사랑스러운 반려동물을 위한 특별한 온라인 쇼핑몰
 
+| 분류 | 상태 | 스택 | 바로 보기 |
+| --- | --- | --- | --- |
+| 데모 | 보관 | Python · Flask · Tailwind | — |
+
 **핑크미야**는 귀여운 고양이(그리고 반려동물) 친구들을 위한 화이트 & 핑크 컨셉의 풀스택 데모 쇼핑몰입니다.  
 Flask + Jinja2 + Tailwind CSS로 만들어졌으며, 실제처럼 동작하는 로그인, 장바구니, 결제 플로우, 위시리스트를 갖추고 있어요.
 
@@ -93,3 +97,10 @@ MIT License — 자유롭게 사용하고, 예쁘게 꾸며서 포트폴리오�
 **Made with love for every cat** 💕🐱
 
 > 이 프로젝트는 "반려동물 전용 쇼핑몰 + 로그인/회원가입 + 흰색+핑크 고양이 테마 + 다양한 페이지 링킹" 요청으로 만들어진 학습용 풀스택 데모입니다.
+
+---
+
+**관련 저장소** · [portfolio-youngchan](https://github.com/JimProKing/portfolio-youngchan)
+
+<sub>[JimProKing](https://github.com/JimProKing) · 이영찬 — 전체 저장소는 프로필의 프로젝트 지도에서 분야별로 볼 수 있습니다.</sub>
+<!-- jpk-footer -->
